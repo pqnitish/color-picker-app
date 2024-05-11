@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Picker App</title>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+<script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+  // Your  code will go here
+  const { useState } = React;
+  function ColorPicker() {
+    const [color, setColor] = useState("");
+    const [isValidColorValue, setIsValidColorValue] = useState(true);
+    function handleColorChange(e) {
+      let newColorValue = e.target.value;
+      let hexaCodeValue = /^#[0-9A-F]{6}$/i;
+      if (hexaCodeValue.test(newColorValue) || newColorValue === "") {
+        setColor(newColorValue);
+        setIsValidColorValue(true);
+      } else {
+        setIsValidColorValue(false);
+      }
+    };
+
+    return (
+      <>
+        <input type="text" placeholder="Enter Hexa Color Code" onChange={handleColorChange} value={color}
+          style={{ borderColor: isValidColorValue ? '' : 'red' }}
+        />
+        {!isValidColorValue && <p style={{ color: 'red' }}>Invalid HEX color code</p>}
+        <div style={{
+          backgroundColor: color, width: '100px', height: '100px'
+
+        }}>
+
+        </div>
+      </>
+    )
+  }
+  let root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<ColorPicker />);
+
+
+</script>
+
+</html>
